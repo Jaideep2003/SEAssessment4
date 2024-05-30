@@ -48,7 +48,7 @@ public class Post {
     public boolean addPost() {
         if (isValidPost()) {
             try (FileWriter writer = new FileWriter("post.txt", true)) {
-                writer.write(this.toString() + "\n");
+                writer.write(this.toString() + "\n\n");
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -62,39 +62,49 @@ public class Post {
     private boolean isValidPost() {
         // Condition 1: Title validation
         if (postTitle == null || postTitle.length() < 10 || postTitle.length() > 250 || !Pattern.matches("^[^\\d\\W]{5}.*", postTitle)) {
+            System.out.println("Title validation failed. Title: " + postTitle);
             return false;
         }
         // Condition 2: Body length validation
         if (postBody == null || postBody.length() < 250) {
+            System.out.println("Body length validation failed. Length: " + (postBody != null ? postBody.length() : 0));
             return false;
         }
         // Condition 3: Tags validation
         if (postTags == null || postTags.length < 2 || postTags.length > 5) {
+            System.out.println("Tags count validation failed. Number of tags: " + (postTags != null ? postTags.length : 0));
             return false;
         }
         for (String tag : postTags) {
             if (tag.length() < 2 || tag.length() > 10 || !tag.equals(tag.toLowerCase())) {
+                System.out.println("Tag validation failed for tag: " + tag);
                 return false;
             }
         }
         // Condition 4: Type validation
         if (!Arrays.asList("Very Difficult", "Difficult", "Easy").contains(postType)) {
+            System.out.println("Post type validation failed. Type: " + postType);
             return false;
         }
         if (postType.equals("Easy") && postTags.length > 3) {
+            System.out.println("Easy post with more than 3 tags validation failed. Number of tags: " + postTags.length);
             return false;
         }
         if ((postType.equals("Very Difficult") || postType.equals("Difficult")) && postBody.length() < 300) {
+            System.out.println("Body length validation for Difficult/Very Difficult post failed. Length: " + postBody.length());
             return false;
         }
         // Condition 5: Emergency status validation
         if (!Arrays.asList("Immediately Needed", "Highly Needed", "Ordinary").contains(postEmergencyStatus)) {
+            System.out.println("Emergency status validation failed. Status: " + postEmergencyStatus);
             return false;
         }
         if (postType.equals("Easy") && (postEmergencyStatus.equals("Immediately Needed") || postEmergencyStatus.equals("Highly Needed"))) {
+            System.out.println("Easy post with invalid emergency status validation failed. Status: " + postEmergencyStatus);
             return false;
         }
         if ((postType.equals("Very Difficult") || postType.equals("Difficult")) && postEmergencyStatus.equals("Ordinary")) {
+            System.out.println("Difficult/Very Difficult post with Ordinary status validation failed. Status: " + postEmergencyStatus);
             return false;
         }
         return true;
@@ -104,7 +114,7 @@ public class Post {
     public boolean addComment(String comment) {
         if (isValidComment(comment)) {
             try (FileWriter writer = new FileWriter("comment.txt", true)) {
-                writer.write(comment + "\n");
+                writer.write("PostID: " + postID + "\n" + comment + "\n\n");
                 postComments.add(comment);
                 return true;
             } catch (IOException e) {
@@ -132,6 +142,7 @@ public class Post {
         return true;
     }
 }
+
 
 
 
