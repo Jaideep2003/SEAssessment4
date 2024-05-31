@@ -1,0 +1,7 @@
+PostID: 1
+Title: Valid Title for Post
+Body: This is a valid body with more than 300 characters. This body should meet the minimum character requirement for Difficult and Very Difficult posts. Adding a lot more text to ensure it exceeds the limit and covers all the necessary conditions for a valid post. More text, more text, more text, and even more text to finally reach well over 300 characters. This should now be sufficient.
+Tags: tag1, tag2
+Type: Difficult
+Emergency: Highly Needed
+Comments: 
